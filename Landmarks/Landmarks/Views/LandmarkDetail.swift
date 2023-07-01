@@ -8,25 +8,27 @@
 import SwiftUI
 
 struct LandmarkDetail: View {
+    var landmark: Landmark
+    
     var body: some View {
-        VStack {
-            MapView()
+        ScrollView {
+            MapView(coordinate: landmark.locationCoordinate)
                 .ignoresSafeArea(edges: .top)
                 .frame(height: 300)
             
-            CircleImage()
+            CircleImage(image: landmark.image)
                 .offset(y: -130)
                 .padding(.bottom, -130)
             
             VStack(alignment: .leading) {
-                Text("Hallstatter sea")
+                Text(landmark.name)
                     .font(.title)
                 
                 HStack {
-                    Text("Hallstatt")
+                    Text(landmark.park)
                         .font(.subheadline)
                     Spacer()
-                    Text("Austria")
+                    Text(landmark.state)
                         .font(.subheadline)
                 }
                 .font(.subheadline)
@@ -34,19 +36,19 @@ struct LandmarkDetail: View {
                 
                 Divider()
                 
-                Text("About Hallstatter sea")
+                Text("About \(landmark.name)")
                     .font(.title2)
-                Text("Descriptive text goes here.")
+                Text(landmark.description)
             }
             .padding()
-            
-            Spacer()
         }
+        .navigationTitle(landmark.name)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct LandmarkDetail_Previews: PreviewProvider {
     static var previews: some View {
-        LandmarkDetail()
+        LandmarkDetail(landmark: landmarks[0])
     }
 }
